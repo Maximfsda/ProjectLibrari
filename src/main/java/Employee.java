@@ -1,3 +1,5 @@
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -8,9 +10,13 @@ public class Employee {
     private int id;
 
     public Employee(String name, String surname, String patronymic, int division, int salary) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
+        if(StringUtils.isBlank(name) || StringUtils.isBlank(surname)
+                || StringUtils.isBlank(patronymic)){
+            throw new RuntimeException("400 Bad Request.");
+        }
+        this.name = StringUtils.capitalize(name);
+        this.surname = StringUtils.capitalize(surname);
+        this.patronymic = StringUtils.capitalize(patronymic);
         this.division = division;
         this.salary = salary;
         this.id = idCounter;
